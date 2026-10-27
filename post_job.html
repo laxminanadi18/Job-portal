@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+{% block title %}Post a Job{% endblock %}
+{% block content %}
+<section class="form-card wide">
+    <h1>Post a New Job</h1>
+    <form method="POST">
+        <label>Job Title</label>
+        <input name="title" maxlength="150" required>
+        <label>Company Name</label>
+        <input name="company" maxlength="150" required>
+        <label>Location</label>
+        <input name="location" maxlength="150" required>
+        <label>Job Type</label>
+        <select name="job_type" required>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Internship">Internship</option>
+            <option value="Contract">Contract</option>
+        </select>
+        <label>Salary</label>
+        <input name="salary" maxlength="100" placeholder="e.g. ₹3–5 LPA">
+        <label>Job Description</label>
+        <textarea name="description" rows="7" maxlength="10000" required></textarea>
+        <button type="submit">Publish Job</button>
+    </form>
+</section>
+{% endblock %}

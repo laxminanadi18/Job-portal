@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Online Job Portal | Find Your Dream Job</title>
+
+    <!-- Connect CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/" class="brand">💼 JobPortal</a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/jobs">Find Jobs</a>
+            {% if session.get('user_id') %}
+                <span class="welcome">Hi, {{ session.get('name') }}</span>
+                {% if session.get('role') == 'employer' %}
+                    <a href="{{ url_for('employer_dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('post_job') }}">Post a Job</a>
+                {% else %}
+                    <a href="{{ url_for('jobseeker_dashboard') }}">My Applications</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+            <a href="/register">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="container messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+
+            <p class="tagline">YOUR CAREER STARTS HERE</p>
+
+            <h1>Find a job that matches your future.</h1>
+
+            <p>
+                Discover exciting opportunities and connect
+                with employers to build your career.
+            </p>
+
+            <!-- Job Search Form -->
+            <form class="search-form"
+                  action="{{ url_for('jobs') }}"
+                  method="GET">
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Job title, company or location"
+                    aria-label="Search jobs"
+                >
+
+                <button type="submit">Search Jobs</button>
+            </form>
+
+            <a href="/register" class="account-link">
+                Create an Account →
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Start Your Journey Section -->
+    <section class="journey container">
+
+        <h2>Start Your Journey</h2>
+
+        <div class="card-grid">
+
+            <!-- Job Seeker Card -->
+            <div class="card">
+                <div class="icon">💼</div>
+
+                <h3>For Job Seekers</h3>
+
+                <p>
+                    Explore job opportunities, apply for jobs,
+                    and track your applications in one place.
+                </p>
+
+                <a href="/jobs">Explore Jobs →</a>
+            </div>
+
+            <!-- Employer Card -->
+            <div class="card">
+                <div class="icon">🏢</div>
+
+                <h3>For Employers</h3>
+
+                <p>
+                    Publish job vacancies, discover talented
+                    candidates, and grow your team.
+                </p>
+
+                <a href="/login">Find Candidates →</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            &copy; 2026 Online Job Portal |
+            Connecting Talent with Opportunity
+        </p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Online Job Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+<header class="navbar">
+    <a class="brand" href="{{ url_for('home') }}">Job<span>Portal</span></a>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('jobs') }}">Find Jobs</a>
+        {% if session.get('role') == 'employer' %}
+            <a href="{{ url_for('employer_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('post_job') }}">Post a Job</a>
+        {% elif session.get('role') == 'jobseeker' %}
+            <a href="{{ url_for('jobseeker_dashboard') }}">My Applications</a>
+        {% endif %}
+        {% if session.get('user_id') %}
+            <span class="welcome">Hi, {{ session.get('name') }}</span>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a class="nav-button" href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</main>
+
+<footer>© 2026 Online Job Portal | Connecting Talent with Opportunity</footer>
+</body>
+</html>

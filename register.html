@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<section class="form-card">
+    <h1>Create an Account</h1>
+    <p>Join our job portal today.</p>
+<form method="POST" action="{{ url_for('register') }}">        
+        <label>Full Name</label>
+        <input name="name" maxlength="100" required>
+        <label>Email Address</label>
+        <input type="email" name="email" maxlength="150" required>
+        <label>Password (minimum 8 characters)</label>
+        <input type="password" name="password" minlength="8" required>
+        <label>Register As</label>
+        <select name="role" required>
+            <option value="">Select Role</option>
+            <option value="jobseeker">Job Seeker</option>
+            <option value="employer">Employer</option>
+        </select>
+        <button type="submit">Register</button>
+    </form>
+    <p>Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+</section>
+{% endblock %}

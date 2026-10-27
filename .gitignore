@@ -1,0 +1,22 @@
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables (keep secrets private)
+# .env
+
+# SQLite database (optional: un-comment if you don't want local db committed)
+# online_job_portal.db
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vercel output
+.vercel/

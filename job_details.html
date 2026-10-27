@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+{% block title %}{{ job.title }}{% endblock %}
+{% block content %}
+<section class="detail-card">
+    <h1>{{ job.title }}</h1>
+    <h3>{{ job.company }}</h3>
+    <p>{{ job.location }} · {{ job.job_type }}</p>
+    <p><strong>Salary:</strong> {{ job.salary or 'Not specified' }}</p>
+    <h3>Job Description</h3>
+    <p class="description">{{ job.description }}</p>
+
+    {% if session.get('role') == 'jobseeker' %}
+    <form method="POST" action="{{ url_for('apply_job', job_id=job.id) }}">
+        <label>Resume link (optional)</label>
+        <input type="url" name="resume_link" maxlength="500"
+               placeholder="https://...">
+        <label>Cover Letter (optional)</label>
+        <textarea name="cover_letter" rows="5" maxlength="5000"></textarea>
+        <button type="submit">Apply Now</button>
+    </form>
+    {% elif not session.get('user_id') %}
+    <p><a href="{{ url_for('login') }}">Log in as a job seeker</a> to apply.</p>
+    {% else %}
+    <p>Only job seekers can apply for jobs.</p>
+    {% endif %}
+</section>
+{% endblock %}

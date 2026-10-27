@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+{% block title %}Employer Dashboard{% endblock %}
+{% block content %}
+<section class="section">
+    <h1>Employer Dashboard</h1>
+    <a class="button-link" href="{{ url_for('post_job') }}">+ Post New Job</a>
+
+    <h2>My Job Posts</h2>
+    {% for job in jobs %}
+        <article class="job-card">
+            <h3>{{ job.title }}</h3>
+            <p>{{ job.company }} · {{ job.location }}</p>
+            <a href="{{ url_for('job_details', job_id=job.id) }}">View Job</a>
+        </article>
+    {% else %}
+        <p>You have not posted any jobs yet.</p>
+    {% endfor %}
+
+    <h2>Applications Received</h2>
+    {% for a in applications %}
+        <article class="job-card">
+            <h3>{{ a.title }}</h3>
+            <p>Applicant: {{ a.applicant_name }} ({{ a.email }})</p>
+            <p>Applied: {{ a.applied_at }} · Status: {{ a.status }}</p>
+            <form method="POST"
+                  action="{{ url_for('update_status', application_id=a.application_id) }}">
+                <select name="status">
+                    {% for s in ['Pending', 'Shortlisted', 'Rejected'] %}
+                    <option value="{{ s }}" {% if a.status == s %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Update Status</button>
+            </form>
+        </article>
+    {% else %}
+        <p>No applications received yet.</p>
+    {% endfor %}
+</section>
+{% endblock %}

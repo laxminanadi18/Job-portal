@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% block title %}Find Jobs{% endblock %}
+{% block content %}
+
+<section class="section">
+    <h1>Explore Job Opportunities</h1>
+   <form method="GET" action="{{ url_for('jobs') }}">
+    <input
+        type="text"
+        name="q"
+        value="{{ q }}"
+        placeholder="Job title, company or location"
+    >
+    <button type="submit">Search Jobs</button>
+</form>
+
+    <div class="job-list">
+        {% for job in jobs %}
+        <article class="job-card">
+            <h2>{{ job.title }}</h2>
+            <p><strong>{{ job.company }}</strong> · {{ job.location }}</p>
+            <p>{{ job.job_type }} · {{ job.salary or 'Salary not specified' }}</p>
+            <a class="button-link" href="{{ url_for('job_details', job_id=job.id) }}">View Details</a>
+        </article>
+        {% else %}
+        <p>No jobs found. Try another search.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
